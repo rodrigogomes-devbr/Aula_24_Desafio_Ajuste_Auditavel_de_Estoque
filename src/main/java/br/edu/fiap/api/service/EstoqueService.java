@@ -2,6 +2,7 @@ package br.edu.fiap.api.service;
 
 
 import br.edu.fiap.api.entity.Estoque;
+import br.edu.fiap.api.entity.MovimentacaoEstoque;
 import br.edu.fiap.api.entity.Produto;
 import br.edu.fiap.api.exception.*;
 import br.edu.fiap.api.repository.EstoqueRepository;
@@ -18,10 +19,16 @@ public class EstoqueService {
     private final EstoqueRepository estoqueRepository;
     private final ProdutoRepository produtoRepository;
 
+    private final MovimentacaoEstoqueRepository movimentacaoRepository;
 
-    public EstoqueService(EstoqueRepository estoqueRepository, ProdutoRepository produtoRepository){
+
+
+    public EstoqueService(EstoqueRepository estoqueRepository,
+                          ProdutoRepository produtoRepository,
+                          MovimentacaoEstoqueRepository movimentacaoRepository) {
         this.estoqueRepository = estoqueRepository;
         this.produtoRepository = produtoRepository;
+        this.movimentacaoRepository = movimentacaoRepository;
     }
 
     public List<Estoque> listar(){
@@ -70,6 +77,33 @@ public class EstoqueService {
         }
 
         return estoqueRepository.save(estoque);
+    }
+
+    @Transactional
+    public MovimentacaoEstoque ajustar(Long id, int novaQuantidade, String motivo) {
+        Estoque estoque = buscar(id);
+
+        int quantidadeAnterior = estoque.getQuantidade();
+
+        if (quantidadeAnterior == novaQuantidade) {
+            throw new AjusteSemAlteracaoException(id, novaQuantidade);
+        }
+
+        try {
+            estoque.ajustar(novaQuantidade);
+        } catch (IllegalArgumentException err) {
+            throw new QuantidadeEstoqueInvalidaException(err.getMessage());
+        }
+
+        estoqueRepository.save(estoque);
+
+        return movimentacaoRepository.save(
+                new MovimentacaoEstoque(estoque, quantidadeAnterior, novaQuantidade, motivo));
+    }
+
+    public List<MovimentacaoEstoque> listarMovimentacoes(Long id) {
+        buscar(id);
+        return movimentacaoRepository.findByEstoque_IdOrderByCriadoEmDesc(id);
     }
 
 

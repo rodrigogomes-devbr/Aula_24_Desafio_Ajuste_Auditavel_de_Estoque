@@ -34,6 +34,21 @@ public class ApiExceptionHandler {
         return resposta(HttpStatus.NOT_FOUND, erro.getMessage());
     }
 
+    @ExceptionHandler(AjusteSemAlteracaoException.class)
+    ResponseEntity<Map<String, Object>> ajusteSemAlteracao(AjusteSemAlteracaoException erro) {
+        return resposta(HttpStatus.CONFLICT, erro.getMessage());
+    }
+
+    @ExceptionHandler(EstoqueNaoEncontradoException.class)
+    ResponseEntity<Map<String, Object>> estoqueNaoEncontrado(EstoqueNaoEncontradoException erro) {
+        return resposta(HttpStatus.NOT_FOUND, erro.getMessage());
+    }
+
+    @ExceptionHandler(QuantidadeEstoqueInvalidaException.class)
+    ResponseEntity<Map<String, Object>> quantidadeInvalida(QuantidadeEstoqueInvalidaException erro) {
+        return resposta(HttpStatus.BAD_REQUEST, erro.getMessage());
+    }
+
     /**
      * Converte falhas de Bean Validation em {@code 400 Bad Request}.
      *
