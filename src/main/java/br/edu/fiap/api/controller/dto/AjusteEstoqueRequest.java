@@ -7,9 +7,9 @@ import jakarta.validation.constraints.Size;
 
 public record AjusteEstoqueRequest(
         @Schema(example = "10")
-        @NotNull int quantidade,
+        @NotNull Integer novaQuantidade,
         @Schema(example = "Ajuste de estoque devido a contagem física")
-        @Size(max = 200) String motivo
+        @NotBlank @Size(max = 200) String motivo
 ) {
 }
 

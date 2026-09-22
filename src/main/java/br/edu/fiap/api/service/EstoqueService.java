@@ -5,6 +5,7 @@ import br.edu.fiap.api.entity.Estoque;
 import br.edu.fiap.api.entity.Produto;
 import br.edu.fiap.api.exception.*;
 import br.edu.fiap.api.repository.EstoqueRepository;
+import br.edu.fiap.api.repository.MovimentacaoEstoqueRepository;
 import br.edu.fiap.api.repository.ProdutoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class EstoqueService {
 
     private final EstoqueRepository estoqueRepository;
     private final ProdutoRepository produtoRepository;
+
 
     public EstoqueService(EstoqueRepository estoqueRepository, ProdutoRepository produtoRepository){
         this.estoqueRepository = estoqueRepository;

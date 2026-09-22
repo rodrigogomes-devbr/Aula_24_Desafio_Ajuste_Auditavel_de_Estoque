@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.Instant;
 
 public record MovimentacaoEstoqueResponse(
-        @Schema(example = "1") Long EstoqueId,
+        @Schema(example = "1") Long estoqueId,
         @Schema(example = "9") int quantidadeAnterior,
         @Schema(example = "10") int quantidadeNova,
         @Schema(example = "Ajuste de estoque e contagem") String motivo,
@@ -20,7 +20,7 @@ public record MovimentacaoEstoqueResponse(
                 movimentacao.getQuantidadeAnterior(),
                 movimentacao.getQuantidadeNova(),
                 movimentacao.getMotivo(),
-                movimentacao.getCriadoEm().toInstant(java.time.ZoneOffset.UTC)
+                movimentacao.getCriadoEm()
 
         );
     }
