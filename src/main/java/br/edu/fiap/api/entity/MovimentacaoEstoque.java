@@ -3,6 +3,7 @@ package br.edu.fiap.api.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,7 +26,7 @@ public class MovimentacaoEstoque {
     @Column(nullable = false, length = 200)
     private String motivo;
 
-    private LocalDateTime criadoEm;
+    private Instant criadoEm;
 
     protected MovimentacaoEstoque(){}
 
@@ -34,7 +35,7 @@ public class MovimentacaoEstoque {
         this.quantidadeAnterior = quantidadeAnterior;
         this.quantidadeNova = quantidadeNova;
         this.motivo = motivo;
-        this.criadoEm = LocalDateTime.now();
+        this.criadoEm = Instant.now();
     }
 
     public Long getId() {
@@ -57,7 +58,7 @@ public class MovimentacaoEstoque {
         return motivo;
     }
 
-    public LocalDateTime getCriadoEm() {
+    public Instant getCriadoEm() {
         return criadoEm;
     }
 }
