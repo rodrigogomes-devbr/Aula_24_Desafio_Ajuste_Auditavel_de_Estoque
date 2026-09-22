@@ -31,6 +31,13 @@ public class Estoque {
         this.quantidade += quantidade;
     }
 
+    public void ajustar(int quantidade) {
+        if (quantidade < 0) {
+            throw new IllegalArgumentException("A quantidade de ajuste não pode ser negativa");
+        }
+        this.quantidade = quantidade;
+    }
+
     public void consumir(int quantidade){
         if(quantidade <= 0){
             throw new IllegalArgumentException("A quantidade de consumo deve ser maior que zero");

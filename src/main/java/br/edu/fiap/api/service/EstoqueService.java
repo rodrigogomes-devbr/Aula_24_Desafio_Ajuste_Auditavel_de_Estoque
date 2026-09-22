@@ -71,6 +71,7 @@ public class EstoqueService {
     }
 
 
+
     public void validarQuantidadeInicial(int quantidade){
         if(quantidade < 0){
             throw new QuantidadeEstoqueInvalidaException("A quantidade inicial de estoque não pode ser negativa");
